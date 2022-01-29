@@ -1,3 +1,4 @@
+using KariyerNet.Api.Extentions;
 using KariyerNet.Application;
 using KariyerNet.Application.Settings;
 using KariyerNet.Domain.Entities.Authentications;
@@ -12,10 +13,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace KariyerNet.Api
@@ -54,13 +57,16 @@ namespace KariyerNet.Api
 
            }).AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
 
-         
+            services.ConfigureCors();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "KariyerNet.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Kariyer.NET", Version = "v1" });
             });
+
+
+            services.AddAuth(jwt);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,9 +83,10 @@ namespace KariyerNet.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseAuthentication();
+            app.UseCors("MyPolicy");
 
             app.UseEndpoints(endpoints =>
             {

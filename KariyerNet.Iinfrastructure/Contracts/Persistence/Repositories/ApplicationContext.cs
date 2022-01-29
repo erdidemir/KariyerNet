@@ -1,4 +1,5 @@
 ﻿using KariyerNet.Domain.Entities.Authentications;
+using KariyerNet.Domain.Entities.Companies;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -15,5 +16,7 @@ namespace KariyerNet.Infrastructure.Contracts.Persistence.Repositories
         {
                 
         }
+
+        public DbSet<Company> Companies { get; set; }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using KariyerNet.Application.Contracts.Persistence.Repositories.Commons;
+using KariyerNet.Application.Contracts.Persistence.Repositories.Companies;
 using KariyerNet.Infrastructure.Contracts.Persistence.Repositories;
 using KariyerNet.Infrastructure.Contracts.Persistence.Repositories.Commons;
+using KariyerNet.Infrastructure.Contracts.Persistence.Repositories.Companies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,8 +22,9 @@ namespace KariyerNet.Infrastructure
             services.AddDbContext<ApplicationContext>(options =>
                options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString")));
 
-            services.AddTransient(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
+            services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
 
+            services.AddScoped<ICompanyRepository, CompanyRepository>();
 
             return services;
         }
