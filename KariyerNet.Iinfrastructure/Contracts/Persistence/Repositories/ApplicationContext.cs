@@ -1,0 +1,19 @@
+﻿using KariyerNet.Domain.Entities.Authentications;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace KariyerNet.Infrastructure.Contracts.Persistence.Repositories
+{
+    public class ApplicationContext : IdentityDbContext<User,Role, int>
+    {
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
+        {
+                
+        }
+    }
+}
