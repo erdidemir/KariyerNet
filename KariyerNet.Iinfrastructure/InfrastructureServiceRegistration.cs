@@ -20,7 +20,7 @@ namespace KariyerNet.Infrastructure
             services.AddDbContext<ApplicationContext>(options =>
                options.UseSqlServer(configuration.GetConnectionString("DefaultConnectionString")));
 
-            services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
+            services.AddTransient(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
 
 
             return services;

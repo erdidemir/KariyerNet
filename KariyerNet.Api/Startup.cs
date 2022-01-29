@@ -1,3 +1,4 @@
+using KariyerNet.Application;
 using KariyerNet.Application.Settings;
 using KariyerNet.Domain.Entities.Authentications;
 using KariyerNet.Infrastructure;
@@ -31,12 +32,16 @@ namespace KariyerNet.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddApplicationServices();
+            // General Configuration
+            services.AddAutoMapper(typeof(Startup));
             services.AddInfrastructureService(Configuration);
 
             #region Settings
 
             services.Configure<JwtSettings>(Configuration.GetSection("JWT"));
             var jwt = Configuration.GetSection("JWT").Get<JwtSettings>();
+
 
             #endregion
 
@@ -48,6 +53,8 @@ namespace KariyerNet.Api
                options.Lockout.MaxFailedAccessAttempts = 5;
 
            }).AddEntityFrameworkStores<ApplicationContext>().AddDefaultTokenProviders();
+
+         
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

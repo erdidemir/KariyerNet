@@ -15,11 +15,11 @@ namespace KariyerNet.Application.Features.Commands.Auhentications.SignUpUser
     {
         private readonly UserManager<User> _userManager;
         private readonly IMapper _mapper;
-        private readonly RoleManager<User> _roleManager;
+        private readonly RoleManager<Role> _roleManager;
 
         public SignUpUserCommandHandler(UserManager<User> userManager,
-            RoleManager<User> roleManager,
-             IMapper mapper
+             IMapper mapper,
+            RoleManager<Role> roleManager
             )
         {
             _userManager = userManager;
@@ -35,14 +35,14 @@ namespace KariyerNet.Application.Features.Commands.Auhentications.SignUpUser
 
             var userCreateResult = await _userManager.CreateAsync(userEntity, request.Password);
 
-            if(userCreateResult.Succeeded)
+            if (userCreateResult.Succeeded)
             {
                 var user = _userManager.Users.SingleOrDefault(u => u.Email == request.Email);
 
                 return user.Id;
             }
 
-           return 0;
+            return 0;
         }
     }
 }
